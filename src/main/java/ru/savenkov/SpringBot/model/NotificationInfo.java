@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import java.util.UUID;
 
 @Entity(name = "notifications_table")
-public class NotificationInfo {
+public class NotificationInfo{
     //@ToString, @EqualsAndHashCode, @Getter on all fields, @Setter on all non-final fields, and @RequiredArgsConstructor
 
     //оставить ли оповещение на будущее (опционально, надо будет добавить опцию, при которой пользователь может удалять уведомления)
@@ -107,4 +107,5 @@ public class NotificationInfo {
         sb.append('}');
         return sb.toString();
     }
+
 }
