@@ -48,7 +48,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     private InputInfoParser inputInfoParser;
     @Autowired
     private DayOfWeekFromEnglishToRussian dayConverter;
-    final BotConfig config;
+    private final BotConfig config;
     public TelegramBot(BotConfig config){
         this.config = config;
         List<BotCommand> listOfCommands = new ArrayList<>();
@@ -306,7 +306,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     private void deleteNotificationProcess(Update update){
         long chatId = update.getMessage().getChatId();
         List<NotificationInfo> notificationInfos = notificationInfoRepository.findAllByChatId(chatId);
-
+        notificationInfos.sort(new NotificationsSortComparator());
         //проверка на корректность входных данных
         if(!inputInfoValidator.indexOfNotificationToDeleteIsValid(update.getMessage().getText(), notificationInfos.size())){
             sendMessage(chatId, "Номер для удаления введён некорректно. Введите число от 1 до " + notificationInfos.size());
@@ -338,6 +338,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         else {
             sendMessage(chatId, "У вас нет уведомлений.");
         }
+
     }
     @Scheduled(cron = "0 * * * * *")//в 0 секунду каждую минуту каждый день каждый час ... = раз в минуту
     private void sendNotificationByTime(){

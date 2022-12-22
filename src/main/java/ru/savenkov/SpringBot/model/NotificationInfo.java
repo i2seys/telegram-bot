@@ -16,7 +16,6 @@ public class NotificationInfo{
 
     //оставить ли оповещение на будущее (опционально, надо будет добавить опцию, при которой пользователь может удалять уведомления)
     @Id
-
     private UUID id;
     @Column(name = "day_of_week")
     @Nullable                                 //Monday      Tuesday Wednesday Thursday Friday  Saturday Sunday
